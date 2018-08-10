@@ -1,0 +1,128 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+<title>Find your Events</title>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<!--     Fonts and icons     -->
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<!-- Material Kit CSS -->
+<link href="{% static 'events/css/material-kit.css' %}" rel="stylesheet" />
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+
+<body>
+<nav class="navbar navbar-color-on-scroll  navbar-expand-lg" color-on-scroll="100">
+  <div class="container"><a class="navbar-brand" href="{% url 'index' %}">ArchEvents</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-bar navbar-kebab"></span> <span class="navbar-toggler-bar navbar-kebab"></span> <span class="navbar-toggler-bar navbar-kebab"></span> </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item "> <a class="nav-link" href="{% url 'finder' %}">find events<span class="sr-only">(current)</span></a></li>
+        <li class="nav-item"> <a class="nav-link" href="#">About us</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#">contact us</a> </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+          {% if request.user.is_authenticated %}
+          <li class="nav-item"> <a class="nav-link" href="{% url 'profile' %}"><i class = "material-icons">perm_identity</i>{{ user.planner.name }} profile</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{% url 'logout' %}"> <i class = "material-icons">settings_power</i> logout</a></li>
+          {% else %}
+          <li class="nav-item"> <a class="nav-link" href="{% url 'login' %}"> <i class = "material-icons">input</i> login</a></li>
+          {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="page-header"  style="background-color: #77819C ;" >
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 ml-auto mr-auto">
+        <div class="brand">
+          <h1><strong>ArchEvents</strong></h1>
+          <h3 class="title ">find your Event's Here ! </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main main-raised">
+  <div class="container">
+    <div class = "section ">
+        {% for event in p_evets %}
+      <div class = "container card card-nav-tabs">
+        <div class = "card-header card-header-rose">
+          <ul class = "nav nav-pills card-header-pills">
+            <li class = "nav-item"> </li>
+            <li class = "nav-item"> <a class = "nav-link" href = "{% url 'details' event.id %}">Further details</a></li>
+          </ul>
+        </div>
+
+
+        <div class = "card-body">
+          <h4 class = "card-title">{{ event.name }}</h4>
+          <h6 class = "card-subtitle">{{ event.type }}</h6>
+          <p class = "card-text">{{ event.details }} </p>
+			<div class="card-footer text-muted"> {{ event.pud_date}}</div>
+          <a href = "{% url 'offer' event.id %}" class = "btn btn-rose ">Make offer</a>
+          
+        </div>
+      </div>
+        {% endfor %}
+{#      <div class = "container card card-nav-tabs">#}
+{#        <div class = "card-header card-header-rose">#}
+{#          <ul class = "nav nav-pills card-header-pills">#}
+{#            <li class = "nav-item"> </li>#}
+{#            <li class = "nav-item"> <a class = "nav-link" href = "{% url 'details' %}">Further details</a></li>#}
+{#          </ul>#}
+{#        </div>#}
+{#        <div class = "card-body">#}
+{#          <h4 class = "card-title">Baby shower </h4>#}
+{#          <h6 class = "card-subtitle">Baby shower</h6>#}
+{#          <p class = "card-text">Climb leg rub face on everything give attitude nap all day for under the bed. Chase mice attack feet but rub face on everything hopped up </p>#}
+{#		  <div class="card-footer text-muted"> 2 weeks ago </div>#}
+{#			<a href="{% url 'finder' %}" class = "btn btn-rose">Make offer</a></div>#}
+{#      </div>#}
+      <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+          <li class="page-item disabled"> <a class="page-link" href="#" tabindex="-1">Previous</a> </li>
+          <li class="page-item active"><a class="page-link" href="#">1<span class="sr-only">(current)</span></a></li>
+          <li class="page-item "> <a class="page-link" href="#">2 </a> </li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"> <a class="page-link" href="#">Next</a> </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<footer class="footer footer-default">
+  <div class="container">
+    <nav class="float-left">
+        <ul>
+          <li>
+            <a href="{% url 'index' %}">
+              ArchEvents
+            </a>
+          </li>
+          <li>
+            <a href=#>
+              About Us
+            </a>
+          </li>
+          <li>
+            <a href=#>
+              Contact us
+            </a>
+          </li>
+        </ul>
+    </nav>
+    <div class="copyright float-right"> &copy; 
+      <script>
+          document.write(new Date().getFullYear())
+        </script>, made with <i class="material-icons">favorite</i> by <a href="https://www.creative-tim.com/" target="blank">Creative Tim</a> for a better web. </div>
+  </div>
+</footer>
+</body>
+</html>
